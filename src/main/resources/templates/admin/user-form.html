@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пользователь - Портал ремонта</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard">🔧 Портал ремонта</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/admin/users">Пользователи</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-link nav-link" style="border: none;">Выход</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-person-plus me-2"></i>
+                            <span th:text="${user.id != null ? 'Редактирование пользователя' : 'Новый пользователь'}">Пользователь</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/users}" th:object="${user}" method="post">
+                            <input type="hidden" th:field="*{id}" th:if="${user.id != null}">
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Логин *</label>
+                                <input type="text" class="form-control" th:field="*{username}" required>
+                            </div>
+                            
+                            <div class="mb-3" th:if="${user.id == null}">
+                                <label class="form-label">Пароль *</label>
+                                <input type="password" class="form-control" th:field="*{password}" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">ФИО *</label>
+                                <input type="text" class="form-control" th:field="*{fullName}" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-control" th:field="*{email}" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Телефон</label>
+                                <input type="tel" class="form-control" th:field="*{phone}">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Роль *</label>
+                                <select class="form-select" th:field="*{role}" required>
+                                    <option th:each="r : ${roles}" th:value="${r}" th:text="${r}">Роль</option>
+                                </select>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle me-1"></i> Сохранить
+                                </button>
+                                <a href="/admin/users" class="btn btn-secondary">Отмена</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

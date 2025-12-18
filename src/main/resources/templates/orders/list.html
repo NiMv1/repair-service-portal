@@ -13,7 +13,9 @@
             <a class="navbar-brand" href="/dashboard">🔧 Портал ремонта</a>
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="/dashboard">Дашборд</a>
-                <a class="nav-link" th:href="@{/logout}">Выход</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-link nav-link" style="border: none;">Выход</button>
+                </form>
             </div>
         </div>
     </nav>
